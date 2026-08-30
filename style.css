@@ -43,3 +43,43 @@
 input[type=range]{width:100%;accent-color:#7568ff}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#202631;color:#fff;border:1px solid #394151;padding:10px 16px;border-radius:10px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:30}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* --- Button polish v4 --- */
+button{appearance:none;-webkit-appearance:none;user-select:none}
+button:focus-visible{outline:2px solid #8d80ff;outline-offset:2px}
+.top-actions button{min-height:40px;font-size:13px;padding:0 16px;border-radius:10px}
+.ghost{border:1px solid #303846;background:#151a22;color:#cbd3df;transition:background .15s,border-color .15s,transform .1s}
+.ghost:hover{background:#1b222d;border-color:#465164;color:#fff}
+.primary{border:1px solid #7568ff;background:#7568ff;box-shadow:0 4px 16px #7568ff22;transition:.15s}
+.primary:hover{background:#8275ff;border-color:#8275ff;transform:translateY(-1px)}
+.mode-switch{box-shadow:0 4px 18px #0002}
+.mode{border:0;min-width:132px;height:42px;font-size:13px;font-weight:650;transition:.15s}
+.mode:not(.active):hover{background:#191f28;color:#dce2ea}
+.tile-grid .tile{position:relative;overflow:hidden;border:1px solid #2b3441;background:linear-gradient(180deg,#181e27,#141920);box-shadow:0 1px 0 #ffffff05 inset,0 3px 8px #0002;min-height:52px}
+.tile-grid .tile:active{transform:translateY(1px)}
+.tile-grid .tile.active{border-color:#7669ff;background:linear-gradient(180deg,#292548,#211f3b);box-shadow:0 0 0 1px #7669ff44 inset,0 5px 15px #7669ff18}
+.tile-grid .tile.active:after{content:"";position:absolute;right:7px;top:7px;width:6px;height:6px;border-radius:50%;background:#8d80ff;box-shadow:0 0 8px #8d80ff}
+.type-tiles .tile{min-height:70px}
+.type-tiles .tile span{font-size:19px;width:30px;height:30px;display:grid;place-items:center;border-radius:8px;background:#202735}
+.type-tiles .tile b{font-size:11px}
+.compact-tiles .tile{min-height:42px}
+.style-tiles .tile{min-height:76px}
+.barcode-tiles .tile{min-height:52px}
+.preset-row{scrollbar-width:thin}
+.preset,.bar-preset{height:34px;border:1px solid #2d3643;background:#151a22;color:#aeb7c5;border-radius:9px;padding:0 12px;font-size:11px;font-weight:650;transition:.15s}
+.preset:hover,.bar-preset:hover{background:#1c232e;border-color:#4b5668;color:#fff}
+.preset:active,.bar-preset:active{transform:translateY(1px)}
+.mini-actions{gap:8px}
+.mini{height:36px;border:1px solid #2d3643;background:#171d25;color:#aeb7c5;border-radius:8px;font-weight:600;transition:.15s}
+.mini:hover{background:#1d2430;border-color:#465163;color:#fff}
+.small{height:36px;border:1px solid #2d3643;font-weight:650}
+.export-buttons{gap:8px}
+.export{height:42px;border:1px solid #303948;background:#171d26;color:#cdd5e1;font-size:12px;font-weight:750;transition:.15s}
+.export:hover{background:#202733;border-color:#596578;color:#fff;transform:translateY(-1px)}
+.export:first-child{border-color:#4a4387;background:#211f39;color:#ddd9ff}
+.project-tools{gap:8px}
+.file-mini{height:36px;margin:0;padding:0 9px;border:1px solid #2d3643;background:#171d25;color:#aeb7c5;border-radius:8px;font-weight:600}
+.upload{cursor:pointer;transition:.15s;background:#131920}
+.upload:hover{border-color:#7568ff;background:#19182b;color:#ddd9ff}
+.zoom button{transition:.15s}
+.zoom button:hover{background:#202733;border-color:#596578;color:#fff}
