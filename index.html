@@ -47,6 +47,15 @@
         </div>
 
         <div id="qrControls">
+          <label>Быстрые пресеты</label>
+          <div class="preset-row">
+            <button class="preset" data-preset="classic">Classic</button>
+            <button class="preset" data-preset="neon">Neon</button>
+            <button class="preset" data-preset="berry">Berry</button>
+            <button class="preset" data-preset="mint">Mint</button>
+            <button class="preset" data-preset="mono">Mono</button>
+            <button class="preset" data-preset="sunset">Sunset</button>
+          </div>
           <label>Тип данных</label>
           <div class="tile-grid type-tiles" id="qrType">
             <button class="tile active" data-value="text"><span>✎</span><b>Текст</b></button>
@@ -57,6 +66,10 @@
             <button class="tile" data-value="sms"><span>▣</span><b>SMS</b></button>
             <button class="tile" data-value="geo"><span>⌖</span><b>Гео</b></button>
             <button class="tile" data-value="vcard"><span>♙</span><b>Контакт</b></button>
+            <button class="tile" data-value="whatsapp"><span>◉</span><b>WhatsApp</b></button>
+            <button class="tile" data-value="telegram"><span>➤</span><b>Telegram</b></button>
+            <button class="tile" data-value="event"><span>◫</span><b>Событие</b></button>
+            <button class="tile" data-value="crypto"><span>₿</span><b>Crypto</b></button>
           </div>
 
           <div id="qrTextGroup">
@@ -65,6 +78,10 @@
           </div>
 
           <div id="structuredFields"></div>
+          <div class="mini-actions">
+            <button class="mini" id="copyPayload">Копировать данные</button>
+            <button class="mini" id="clearPayload">Очистить</button>
+          </div>
 
           <div class="grid-2">
             <div>
@@ -75,6 +92,13 @@
               <label>Отступ</label>
               <input id="qrMargin" type="number" min="0" max="80" value="24">
             </div>
+          </div>
+          <label>Готовые размеры</label>
+          <div class="tile-grid compact-tiles size-tiles" id="sizePresets">
+            <button class="tile" data-value="256">256</button>
+            <button class="tile active" data-value="512">512</button>
+            <button class="tile" data-value="1024">1024</button>
+            <button class="tile" data-value="2048">2048</button>
           </div>
 
           <label>Стиль точек</label>
@@ -87,10 +111,37 @@
             <button class="tile" data-value="classy-rounded"><span class="qr-shape classy-r"></span><b>Classy R</b></button>
           </div>
 
+          <label>Форма внешних глазков</label>
+          <div class="tile-grid compact-tiles" id="cornerSquareType">
+            <button class="tile active" data-value="square">□</button>
+            <button class="tile" data-value="dot">○</button>
+            <button class="tile" data-value="extra-rounded">▢</button>
+          </div>
+
+          <label>Форма центров глазков</label>
+          <div class="tile-grid compact-tiles" id="cornerDotType">
+            <button class="tile active" data-value="square">■</button>
+            <button class="tile" data-value="dot">●</button>
+          </div>
+
           <label>Цвет точек</label>
           <div class="color-row">
             <input id="dotColor" type="color" value="#111827">
             <input id="dotColorText" type="text" value="#111827" maxlength="7">
+          </div>
+
+          <label class="check"><input id="linkEyeColors" type="checkbox" checked> Цвет глазков как у точек</label>
+          <div id="eyeColorFields" class="hidden">
+            <label>Цвет внешних глазков</label>
+            <div class="color-row">
+              <input id="cornerSquareColor" type="color" value="#111827">
+              <input id="cornerSquareColorText" type="text" value="#111827" maxlength="7">
+            </div>
+            <label>Цвет центров глазков</label>
+            <div class="color-row">
+              <input id="cornerDotColor" type="color" value="#111827">
+              <input id="cornerDotColorText" type="text" value="#111827" maxlength="7">
+            </div>
           </div>
 
           <label class="check"><input id="gradientToggle" type="checkbox"> Градиент</label>
@@ -115,6 +166,10 @@
           </div>
 
           <label class="check"><input id="transparentBg" type="checkbox"> Прозрачный фон</label>
+          <div class="mini-actions">
+            <button class="mini" id="randomColors">Случайные цвета</button>
+            <button class="mini" id="invertColors">Инвертировать</button>
+          </div>
 
           <label>Логотип / фото в центре</label>
           <div class="upload">
@@ -127,6 +182,9 @@
               <div><label>Отступ</label><input id="logoMargin" type="number" min="0" max="30" value="5"></div>
             </div>
             <label class="check"><input id="hideDots" type="checkbox"> Скрывать точки под логотипом</label>
+            <label class="check"><input id="logoBg" type="checkbox" checked> Белая подложка под логотипом</label>
+            <label>Скругление логотипа</label>
+            <input id="logoRadius" type="range" min="0" max="50" value="18">
             <button class="small danger" id="removeLogo">Удалить изображение</button>
           </div>
 
@@ -137,9 +195,40 @@
             <button class="tile" data-value="Q"><b>Q</b><small>25%</small></button>
             <button class="tile" data-value="H"><b>H</b><small>30%</small></button>
           </div>
+
+          <label>Подпись под QR</label>
+          <input id="qrCaption" type="text" maxlength="80" placeholder="Например: Сканируй меня">
+          <div class="grid-2">
+            <div><label>Размер подписи</label><input id="captionSize" type="number" min="10" max="48" value="18"></div>
+            <div><label>Отступ снизу</label><input id="captionGap" type="number" min="0" max="60" value="14"></div>
+          </div>
+          <label>Цвет подписи</label>
+          <div class="color-row">
+            <input id="captionColor" type="color" value="#111827">
+            <input id="captionColorText" type="text" value="#111827" maxlength="7">
+          </div>
+          <label class="check"><input id="frameToggle" type="checkbox"> Рамка вокруг QR</label>
+          <div id="frameFields" class="hidden">
+            <div class="grid-2">
+              <div><label>Толщина</label><input id="frameWidth" type="number" min="1" max="20" value="4"></div>
+              <div><label>Скругление</label><input id="frameRadius" type="number" min="0" max="80" value="24"></div>
+            </div>
+            <label>Цвет рамки</label>
+            <div class="color-row">
+              <input id="frameColor" type="color" value="#111827">
+              <input id="frameColorText" type="text" value="#111827" maxlength="7">
+            </div>
+          </div>
         </div>
 
         <div id="barcodeControls" class="hidden">
+          <label>Быстрые пресеты</label>
+          <div class="preset-row">
+            <button class="bar-preset" data-preset="retail">Retail</button>
+            <button class="bar-preset" data-preset="compact">Compact</button>
+            <button class="bar-preset" data-preset="wide">Wide</button>
+            <button class="bar-preset" data-preset="dark">Dark</button>
+          </div>
           <label>Тип штрихкода</label>
           <div class="tile-grid barcode-tiles" id="barcodeFormat">
             <button class="tile active" data-value="CODE128"><b>Code 128</b></button>
@@ -151,6 +240,11 @@
             <button class="tile" data-value="ITF"><b>ITF</b></button>
             <button class="tile" data-value="MSI"><b>MSI</b></button>
             <button class="tile" data-value="pharmacode"><b>Pharma</b></button>
+            <button class="tile" data-value="codabar"><b>Codabar</b></button>
+            <button class="tile" data-value="MSI10"><b>MSI10</b></button>
+            <button class="tile" data-value="MSI11"><b>MSI11</b></button>
+            <button class="tile" data-value="MSI1010"><b>MSI1010</b></button>
+            <button class="tile" data-value="MSI1110"><b>MSI1110</b></button>
           </div>
 
           <label>Значение</label>
@@ -174,6 +268,14 @@
           </div>
 
           <label class="check"><input id="showText" type="checkbox" checked> Показывать цифры</label>
+          <label class="check"><input id="barBold" type="checkbox"> Жирный текст</label>
+          <label>Положение текста</label>
+          <div class="tile-grid compact-tiles" id="barTextPosition">
+            <button class="tile active" data-value="bottom">Снизу</button>
+            <button class="tile" data-value="top">Сверху</button>
+          </div>
+          <label>Отступ текста</label>
+          <input id="barTextMargin" type="number" min="-20" max="60" value="2">
 
           <label>Шрифт</label>
           <div class="tile-grid font-tiles" id="barFont">
@@ -185,6 +287,9 @@
 
           <label>Размер текста</label>
           <input id="barFontSize" type="number" min="8" max="48" value="18">
+
+          <label>Общий отступ</label>
+          <input id="barMargin" type="number" min="0" max="100" value="20">
 
           <label>Выравнивание</label>
           <div class="tile-grid compact-tiles" id="barTextAlign">
@@ -201,6 +306,18 @@
             <button class="export" data-format="jpeg">JPG</button>
             <button class="export" data-format="svg">SVG</button>
           </div>
+          <label>Масштаб экспорта</label>
+          <div class="tile-grid compact-tiles" id="exportScale">
+            <button class="tile active" data-value="1">1×</button>
+            <button class="tile" data-value="2">2×</button>
+            <button class="tile" data-value="4">4×</button>
+          </div>
+          <div class="project-tools">
+            <button class="mini" id="saveProject">Сохранить проект</button>
+            <button class="mini" id="loadProject">Загрузить проект</button>
+            <button class="mini" id="exportProject">Экспорт JSON</button>
+            <label class="mini file-mini">Импорт JSON<input id="importProjectFile" type="file" accept=".json,application/json"></label>
+          </div>
         </div>
       </aside>
 
@@ -214,8 +331,11 @@
 
         <div class="canvas-wrap" id="canvasWrap">
           <div class="paper" id="paper">
-            <div id="qrPreview"></div>
-            <svg id="barcodePreview" class="hidden"></svg>
+            <div class="code-stage">
+              <div id="qrPreview"></div>
+              <svg id="barcodePreview" class="hidden"></svg>
+              <div id="qrCaptionPreview" class="qr-caption hidden"></div>
+            </div>
           </div>
         </div>
 
