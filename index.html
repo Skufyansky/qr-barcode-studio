@@ -48,16 +48,16 @@
 
         <div id="qrControls">
           <label>Тип данных</label>
-          <select id="qrType">
-            <option value="text">Обычный текст</option>
-            <option value="url">Ссылка / URL</option>
-            <option value="wifi">Wi-Fi</option>
-            <option value="email">Email</option>
-            <option value="phone">Телефон</option>
-            <option value="sms">SMS</option>
-            <option value="geo">Геолокация</option>
-            <option value="vcard">Контакт</option>
-          </select>
+          <div class="tile-grid type-tiles" id="qrType">
+            <button class="tile active" data-value="text"><span>✎</span><b>Текст</b></button>
+            <button class="tile" data-value="url"><span>↗</span><b>Ссылка</b></button>
+            <button class="tile" data-value="wifi"><span>⌁</span><b>Wi-Fi</b></button>
+            <button class="tile" data-value="email"><span>✉</span><b>Email</b></button>
+            <button class="tile" data-value="phone"><span>☎</span><b>Телефон</b></button>
+            <button class="tile" data-value="sms"><span>▣</span><b>SMS</b></button>
+            <button class="tile" data-value="geo"><span>⌖</span><b>Гео</b></button>
+            <button class="tile" data-value="vcard"><span>♙</span><b>Контакт</b></button>
+          </div>
 
           <div id="qrTextGroup">
             <label>Содержимое</label>
@@ -78,14 +78,14 @@
           </div>
 
           <label>Стиль точек</label>
-          <select id="dotType">
-            <option value="square">Квадрат</option>
-            <option value="dots">Круг</option>
-            <option value="rounded">Закруглённый</option>
-            <option value="extra-rounded">Очень закруглённый</option>
-            <option value="classy">Classy</option>
-            <option value="classy-rounded">Classy Rounded</option>
-          </select>
+          <div class="tile-grid style-tiles" id="dotType">
+            <button class="tile active" data-value="square"><span class="qr-shape square"></span><b>Квадрат</b></button>
+            <button class="tile" data-value="dots"><span class="qr-shape dots"></span><b>Круг</b></button>
+            <button class="tile" data-value="rounded"><span class="qr-shape rounded"></span><b>Мягкий</b></button>
+            <button class="tile" data-value="extra-rounded"><span class="qr-shape extra"></span><b>Плавный</b></button>
+            <button class="tile" data-value="classy"><span class="qr-shape classy"></span><b>Classy</b></button>
+            <button class="tile" data-value="classy-rounded"><span class="qr-shape classy-r"></span><b>Classy R</b></button>
+          </div>
 
           <label>Цвет точек</label>
           <div class="color-row">
@@ -99,13 +99,13 @@
               <div><label>Цвет 1</label><input id="grad1" type="color" value="#6d5dfc"></div>
               <div><label>Цвет 2</label><input id="grad2" type="color" value="#00c2ff"></div>
             </div>
-            <label>Направление</label>
-            <select id="gradRotation">
-              <option value="0">Слева направо</option>
-              <option value="45">По диагонали</option>
-              <option value="90">Сверху вниз</option>
-              <option value="180">Справа налево</option>
-            </select>
+            <label>Направление градиента</label>
+            <div class="tile-grid compact-tiles" id="gradRotation">
+              <button class="tile active" data-value="0">→</button>
+              <button class="tile" data-value="45">↘</button>
+              <button class="tile" data-value="90">↓</button>
+              <button class="tile" data-value="180">←</button>
+            </div>
           </div>
 
           <label>Фон</label>
@@ -131,27 +131,27 @@
           </div>
 
           <label>Коррекция ошибок</label>
-          <select id="qrLevel">
-            <option value="L">L — 7%</option>
-            <option value="M" selected>M — 15%</option>
-            <option value="Q">Q — 25%</option>
-            <option value="H">H — 30% (лучше для логотипа)</option>
-          </select>
+          <div class="tile-grid compact-tiles error-tiles" id="qrLevel">
+            <button class="tile" data-value="L"><b>L</b><small>7%</small></button>
+            <button class="tile active" data-value="M"><b>M</b><small>15%</small></button>
+            <button class="tile" data-value="Q"><b>Q</b><small>25%</small></button>
+            <button class="tile" data-value="H"><b>H</b><small>30%</small></button>
+          </div>
         </div>
 
         <div id="barcodeControls" class="hidden">
           <label>Тип штрихкода</label>
-          <select id="barcodeFormat">
-            <option value="CODE128">Code 128</option>
-            <option value="CODE39">Code 39</option>
-            <option value="EAN13">EAN-13</option>
-            <option value="EAN8">EAN-8</option>
-            <option value="UPC">UPC-A</option>
-            <option value="ITF14">ITF-14</option>
-            <option value="ITF">ITF</option>
-            <option value="MSI">MSI</option>
-            <option value="pharmacode">Pharmacode</option>
-          </select>
+          <div class="tile-grid barcode-tiles" id="barcodeFormat">
+            <button class="tile active" data-value="CODE128"><b>Code 128</b></button>
+            <button class="tile" data-value="CODE39"><b>Code 39</b></button>
+            <button class="tile" data-value="EAN13"><b>EAN-13</b></button>
+            <button class="tile" data-value="EAN8"><b>EAN-8</b></button>
+            <button class="tile" data-value="UPC"><b>UPC-A</b></button>
+            <button class="tile" data-value="ITF14"><b>ITF-14</b></button>
+            <button class="tile" data-value="ITF"><b>ITF</b></button>
+            <button class="tile" data-value="MSI"><b>MSI</b></button>
+            <button class="tile" data-value="pharmacode"><b>Pharma</b></button>
+          </div>
 
           <label>Значение</label>
           <input id="barcodeText" type="text" value="5901234123457" placeholder="Введите значение">
@@ -176,22 +176,22 @@
           <label class="check"><input id="showText" type="checkbox" checked> Показывать цифры</label>
 
           <label>Шрифт</label>
-          <select id="barFont">
-            <option>Arial</option>
-            <option>Verdana</option>
-            <option>Georgia</option>
-            <option>Courier New</option>
-          </select>
+          <div class="tile-grid font-tiles" id="barFont">
+            <button class="tile active" data-value="Arial">Arial</button>
+            <button class="tile" data-value="Verdana">Verdana</button>
+            <button class="tile" data-value="Georgia">Georgia</button>
+            <button class="tile" data-value="Courier New">Courier</button>
+          </div>
 
           <label>Размер текста</label>
           <input id="barFontSize" type="number" min="8" max="48" value="18">
 
           <label>Выравнивание</label>
-          <select id="barTextAlign">
-            <option value="center">По центру</option>
-            <option value="left">Слева</option>
-            <option value="right">Справа</option>
-          </select>
+          <div class="tile-grid compact-tiles" id="barTextAlign">
+            <button class="tile" data-value="left">←</button>
+            <button class="tile active" data-value="center">↔</button>
+            <button class="tile" data-value="right">→</button>
+          </div>
         </div>
 
         <div class="export-box">
