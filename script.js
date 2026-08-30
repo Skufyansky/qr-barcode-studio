@@ -20,7 +20,7 @@ syncColor("#dotColor","#dotColorText"); syncColor("#bgColor","#bgColorText");
 syncColor("#barColor","#barColorText"); syncColor("#barBg","#barBgText");
 
 function payload(){
-  const type=$("#qrType").value;
+  const type=tileValue("#qrType");
   if(type==="text"||type==="url") return $("#qrText").value;
   const vals={}; $$("#structuredFields input").forEach(i=>vals[i.dataset.key]=i.value);
   if(type==="wifi") return `WIFI:T:${vals.security||"WPA"};S:${vals.ssid||""};P:${vals.password||""};H:${vals.hidden==="on"?"true":"false"};;`;
@@ -44,7 +44,7 @@ function fields(type){
 }
 function gradient(){
   if(!$("#gradientToggle").checked)return undefined;
-  return {type:"linear",rotation:Number($("#gradRotation").value),colorStops:[{offset:0,color:$("#grad1").value},{offset:1,color:$("#grad2").value}]};
+  return {type:"linear",rotation:Number(tileValue("#gradRotation")),colorStops:[{offset:0,color:$("#grad1").value},{offset:1,color:$("#grad2").value}]};
 }
 function updateQR(){
   const bg=$("#transparentBg").checked ? "transparent" : $("#bgColor").value;
@@ -52,12 +52,12 @@ function updateQR(){
   const opts={
     width:+$("#qrSize").value,height:+$("#qrSize").value,data:payload()||" ",
     margin:+$("#qrMargin").value,
-    qrOptions:{errorCorrectionLevel:$("#qrLevel").value},
-    dotsOptions:{type:$("#dotType").value,color:$("#dotColor").value,gradient:gradient()},
+    qrOptions:{errorCorrectionLevel:tileValue("#qrLevel")},
+    dotsOptions:{type:tileValue("#dotType"),color:$("#dotColor").value,gradient:gradient()},
     backgroundOptions:{color:bg},
     image:logoData||undefined,
     imageOptions:{hideBackgroundDots:$("#hideDots").checked, imageSize:+$("#logoSize").value/100, margin:+$("#logoMargin").value, crossOrigin:"anonymous"},
-    cornersSquareOptions:{type:$("#dotType").value==="dots"?"dot":$("#dotType").value,color:$("#dotColor").value},
+    cornersSquareOptions:{type:tileValue("#dotType")==="dots"?"dot":tileValue("#dotType"),color:$("#dotColor").value},
     cornersDotOptions:{type:"dot",color:$("#dotColor").value}
   };
   qr.update(opts);
@@ -67,12 +67,12 @@ function updateBarcode(){
   const svg=$("#barcodePreview");
   try{
     JsBarcode(svg,$("#barcodeText").value||"0",{
-      format:$("#barcodeFormat").value,
+      format:tileValue("#barcodeFormat"),
       width:+$("#barWidth").value,height:+$("#barHeight").value,
       displayValue:$("#showText").checked,
       lineColor:$("#barColor").value,background:$("#barBg").value,
-      font:$("#barFont").value,fontSize:+$("#barFontSize").value,
-      textAlign:$("#barTextAlign").value,margin:20
+      font:tileValue("#barFont"),fontSize:+$("#barFontSize").value,
+      textAlign:tileValue("#barTextAlign"),margin:20
     });
     $("#counter").textContent=$("#barcodeText").value.length;
   }catch(e){
@@ -80,9 +80,22 @@ function updateBarcode(){
     $("#counter").textContent="Ошибка";
   }
 }
+function tileValue(selector){
+  const active=$(selector+" .tile.active");
+  return active ? active.dataset.value : "";
+}
+function setupTiles(){
+  $$(".tile-grid .tile").forEach(btn=>btn.addEventListener("click",()=>{
+    const group=btn.parentElement;
+    group.querySelectorAll(".tile").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    render();
+  }));
+}
 function render(){mode==="qr"?updateQR():updateBarcode()}
-$$("input,select,textarea").forEach(el=>el.addEventListener("input",render));
-$("#qrType").addEventListener("change",()=>{fields($("#qrType").value);render()});
+$$("input,textarea").forEach(el=>el.addEventListener("input",render));
+setupTiles();
+$("#qrType").addEventListener("change",()=>{fields(tileValue("#qrType"));render()});
 $("#gradientToggle").addEventListener("change",()=>$("#gradientFields").classList.toggle("hidden",!$("#gradientToggle").checked));
 $("#transparentBg").addEventListener("change",render);
 
