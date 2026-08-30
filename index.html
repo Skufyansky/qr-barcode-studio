@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="QR & Barcode Studio — customizable QR code and barcode generator.">
+  <title>QR & Barcode Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">⌁</span>
+      <span>QR & Barcode <b>Studio</b></span>
+    </a>
+    <div class="top-actions">
+      <button class="ghost" id="resetBtn">Сбросить</button>
+      <button class="primary" id="downloadTop">Скачать</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">FREE • BROWSER BASED</p>
+        <h1>Создавай коды<br><span>по-своему.</span></h1>
+        <p class="subtitle">QR-коды и штрихкоды с цветами, градиентами, логотипами, фотографиями и экспортом без сервера.</p>
+      </div>
+      <div class="status"><i></i> Всё работает в браузере</div>
+    </section>
+
+    <div class="mode-switch">
+      <button class="mode active" data-mode="qr">▦ <span>QR-код</span></button>
+      <button class="mode" data-mode="barcode">▥ <span>Штрихкод</span></button>
+    </div>
+
+    <section class="workspace">
+      <aside class="panel controls">
+        <div class="panel-head">
+          <div>
+            <small>НАСТРОЙКИ</small>
+            <h2 id="modeTitle">QR-код</h2>
+          </div>
+          <span class="counter" id="counter">0</span>
+        </div>
+
+        <div id="qrControls">
+          <label>Тип данных</label>
+          <select id="qrType">
+            <option value="text">Обычный текст</option>
+            <option value="url">Ссылка / URL</option>
+            <option value="wifi">Wi-Fi</option>
+            <option value="email">Email</option>
+            <option value="phone">Телефон</option>
+            <option value="sms">SMS</option>
+            <option value="geo">Геолокация</option>
+            <option value="vcard">Контакт</option>
+          </select>
+
+          <div id="qrTextGroup">
+            <label>Содержимое</label>
+            <textarea id="qrText" rows="5" placeholder="Введите текст, ссылку или данные...">https://example.com</textarea>
+          </div>
+
+          <div id="structuredFields"></div>
+
+          <div class="grid-2">
+            <div>
+              <label>Размер</label>
+              <input id="qrSize" type="number" min="128" max="2048" step="16" value="512">
+            </div>
+            <div>
+              <label>Отступ</label>
+              <input id="qrMargin" type="number" min="0" max="80" value="24">
+            </div>
+          </div>
+
+          <label>Стиль точек</label>
+          <select id="dotType">
+            <option value="square">Квадрат</option>
+            <option value="dots">Круг</option>
+            <option value="rounded">Закруглённый</option>
+            <option value="extra-rounded">Очень закруглённый</option>
+            <option value="classy">Classy</option>
+            <option value="classy-rounded">Classy Rounded</option>
+          </select>
+
+          <label>Цвет точек</label>
+          <div class="color-row">
+            <input id="dotColor" type="color" value="#111827">
+            <input id="dotColorText" type="text" value="#111827" maxlength="7">
+          </div>
+
+          <label class="check"><input id="gradientToggle" type="checkbox"> Градиент</label>
+          <div id="gradientFields" class="hidden">
+            <div class="grid-2">
+              <div><label>Цвет 1</label><input id="grad1" type="color" value="#6d5dfc"></div>
+              <div><label>Цвет 2</label><input id="grad2" type="color" value="#00c2ff"></div>
+            </div>
+            <label>Направление</label>
+            <select id="gradRotation">
+              <option value="0">Слева направо</option>
+              <option value="45">По диагонали</option>
+              <option value="90">Сверху вниз</option>
+              <option value="180">Справа налево</option>
+            </select>
+          </div>
+
+          <label>Фон</label>
+          <div class="color-row">
+            <input id="bgColor" type="color" value="#ffffff">
+            <input id="bgColorText" type="text" value="#ffffff" maxlength="7">
+          </div>
+
+          <label class="check"><input id="transparentBg" type="checkbox"> Прозрачный фон</label>
+
+          <label>Логотип / фото в центре</label>
+          <div class="upload">
+            <input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp">
+            <span>＋ Загрузить изображение</span>
+          </div>
+          <div id="logoOptions" class="hidden">
+            <div class="grid-2">
+              <div><label>Размер</label><input id="logoSize" type="number" min="10" max="45" value="25"></div>
+              <div><label>Отступ</label><input id="logoMargin" type="number" min="0" max="30" value="5"></div>
+            </div>
+            <label class="check"><input id="hideDots" type="checkbox"> Скрывать точки под логотипом</label>
+            <button class="small danger" id="removeLogo">Удалить изображение</button>
+          </div>
+
+          <label>Коррекция ошибок</label>
+          <select id="qrLevel">
+            <option value="L">L — 7%</option>
+            <option value="M" selected>M — 15%</option>
+            <option value="Q">Q — 25%</option>
+            <option value="H">H — 30% (лучше для логотипа)</option>
+          </select>
+        </div>
+
+        <div id="barcodeControls" class="hidden">
+          <label>Тип штрихкода</label>
+          <select id="barcodeFormat">
+            <option value="CODE128">Code 128</option>
+            <option value="CODE39">Code 39</option>
+            <option value="EAN13">EAN-13</option>
+            <option value="EAN8">EAN-8</option>
+            <option value="UPC">UPC-A</option>
+            <option value="ITF14">ITF-14</option>
+            <option value="ITF">ITF</option>
+            <option value="MSI">MSI</option>
+            <option value="pharmacode">Pharmacode</option>
+          </select>
+
+          <label>Значение</label>
+          <input id="barcodeText" type="text" value="5901234123457" placeholder="Введите значение">
+
+          <div class="grid-2">
+            <div><label>Ширина</label><input id="barWidth" type="number" min="1" max="10" value="3"></div>
+            <div><label>Высота</label><input id="barHeight" type="number" min="40" max="500" value="160"></div>
+          </div>
+
+          <label>Цвет полос</label>
+          <div class="color-row">
+            <input id="barColor" type="color" value="#111827">
+            <input id="barColorText" type="text" value="#111827" maxlength="7">
+          </div>
+
+          <label>Цвет фона</label>
+          <div class="color-row">
+            <input id="barBg" type="color" value="#ffffff">
+            <input id="barBgText" type="text" value="#ffffff" maxlength="7">
+          </div>
+
+          <label class="check"><input id="showText" type="checkbox" checked> Показывать цифры</label>
+
+          <label>Шрифт</label>
+          <select id="barFont">
+            <option>Arial</option>
+            <option>Verdana</option>
+            <option>Georgia</option>
+            <option>Courier New</option>
+          </select>
+
+          <label>Размер текста</label>
+          <input id="barFontSize" type="number" min="8" max="48" value="18">
+
+          <label>Выравнивание</label>
+          <select id="barTextAlign">
+            <option value="center">По центру</option>
+            <option value="left">Слева</option>
+            <option value="right">Справа</option>
+          </select>
+        </div>
+
+        <div class="export-box">
+          <small>ЭКСПОРТ</small>
+          <div class="export-buttons">
+            <button class="export" data-format="png">PNG</button>
+            <button class="export" data-format="jpeg">JPG</button>
+            <button class="export" data-format="svg">SVG</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="preview-area">
+        <div class="preview-toolbar">
+          <span id="previewLabel">Предпросмотр</span>
+          <div class="zoom">
+            <button id="zoomOut">−</button><b id="zoomValue">100%</b><button id="zoomIn">+</button>
+          </div>
+        </div>
+
+        <div class="canvas-wrap" id="canvasWrap">
+          <div class="paper" id="paper">
+            <div id="qrPreview"></div>
+            <svg id="barcodePreview" class="hidden"></svg>
+          </div>
+        </div>
+
+        <div class="preview-tip">Изменяй параметры слева — результат обновляется мгновенно.</div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <span>QR & Barcode Studio</span>
+    <span>Made for GitHub Pages • No server required</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
